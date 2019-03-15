@@ -6,7 +6,7 @@
 #    By: omulder <omulder@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/05 07:59:03 by omulder        #+#    #+#                 #
-#    Updated: 2019/03/13 16:35:04 by omulder       ########   odam.nl          #
+#    Updated: 2019/03/15 16:59:04 by omulder       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ $(OBJECTS): $(SRCS) $(LIBFT)
 	$(CC) $(FLAGS) $(INCLUDES) -c $^
 
 clean:
-	rm -f $(OBJECTS)
+	@rm -f $(OBJECTS)
 	
 fclean: clean
 	rm -f $(NAME)

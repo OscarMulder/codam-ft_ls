@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstcount.c                                      :+:    :+:            */
+/*   filelst_lenname.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/02/02 14:04:10 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/15 21:00:54 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/15 17:02:38 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/15 17:02:41 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_ls.h"
 
-int		filelst_count(t_filelst *lst)
+int		filelst_lenname(t_filelst *filelst, int length)
 {
-	if (lst == NULL)
-		return (0);
-	return (1 + ft_lstcount(lst->next));
+	int len;
+
+	if (filelst != NULL)
+	{
+		len = ft_strlen(filelst->entr->d_name);
+		if (length > len)
+			len = length;
+		if (filelst->next != NULL)
+			return (filelst_lenname(filelst->next, len));
+		return (len);
+	}
+	return (length);
 }

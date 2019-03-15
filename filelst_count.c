@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstcount.c                                      :+:    :+:            */
+/*   filelst_count.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/02/02 14:04:10 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/15 21:00:54 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/15 20:59:27 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/15 21:01:13 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <ft_ls.h>
 
 int		filelst_count(t_filelst *lst)
 {
 	if (lst == NULL)
 		return (0);
-	return (1 + ft_lstcount(lst->next));
+	return (1 + filelst_count(lst->next));
 }

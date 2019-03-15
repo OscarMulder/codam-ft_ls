@@ -6,7 +6,7 @@
 #    By: omulder <omulder@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/01/09 11:10:43 by omulder        #+#    #+#                 #
-#    Updated: 2019/03/13 20:05:54 by omulder       ########   odam.nl          #
+#    Updated: 2019/03/15 16:58:54 by omulder       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,8 @@ $(OBJECTS): $(FILES)
 	$(CC) $(FLAGS) $(INCLUDES) -c $^
 
 clean:
-	rm -f $(OBJECTS)
-	make -C ft_printf clean
+	@rm -f $(OBJECTS)
+	@make -C ft_printf clean
 	
 fclean: clean
 	rm -f $(NAME)
