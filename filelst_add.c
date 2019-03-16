@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 17:02:16 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/15 20:05:41 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/16 20:14:08 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	filelst_add(t_filelst **filelst, struct dirent *entr, char *dir)
 	new->stat = (struct stat*)ft_memalloc(sizeof(struct stat));
 	if (stat(new->path, new->stat) == -1)
 		exit(ERROR);
+	new->filename = ft_strdup(entr->d_name);
 	new->next = *filelst;
 	*filelst = new;
 }

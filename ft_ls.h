@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:40:26 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/16 19:14:54 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/16 20:16:28 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ typedef struct	s_print
 
 typedef struct	s_filelst
 {
-	struct dirent		*entr;
+	struct dirent		*entr; // DO NOT TRUST IT CAN DISSAPEAR
 	struct stat			*stat;
 	char				*path;
+	char				*filename;
 	struct s_filelst	*next;
 }				t_filelst;
 

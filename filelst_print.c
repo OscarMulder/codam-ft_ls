@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 17:02:53 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/16 19:18:26 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/16 20:14:23 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,20 @@ void				filelst_print(t_filelst *filelst)
 	while (a.printed < a.total)
 	{
 		if (a.coli == a.col && a.extra == (a.row - 1))
-			ft_printf("%s", ptr->entr->d_name);
+			ft_printf("%s", ptr->filename);
 		else if (a.coli == (a.col + (a.left != 0)))
 		{
-			ft_printf("%s\n", ptr->entr->d_name);
+			ft_printf("%s\n", ptr->filename);
 			if (a.left != 0)
 				a.left--;
 			a.coli = 0;
 			a.extra++;
 		}
 		else
-			ft_printf("%-*s", a.length, ptr->entr->d_name);
+			ft_printf("%-*s", a.length, ptr->filename);
 		a.coli++;
 		ptr = set_ptr(ptr, filelst, a.extra, a.row);
+		//ptr = ptr->next;
 		a.printed++;
 	}
 }

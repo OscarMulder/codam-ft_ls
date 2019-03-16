@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 17:00:02 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/15 17:01:17 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/16 20:15:19 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	filelst_sort(t_filelst **filelst)
 	prev = *filelst;
 	while (ptr != NULL)
 	{
-		if (ft_strcmp(smallest->entr->d_name, ptr->entr->d_name) > 0)
+		if (ft_strcmp(smallest->filename, ptr->filename) > 0)
 		{
 			prevsmal = prev;
 			smallest = ptr;
