@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:40:26 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/15 21:16:42 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/16 19:14:54 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ typedef struct	s_args
 	int	r;
 	int	t;
 }				t_args;
+
+typedef struct	s_print 
+{
+	int	row;
+	int	length;
+	int	coli;
+	int	total;
+	int	printed;
+	int	extra;
+	int	col;
+	int	left;
+
+}				t_print;
 
 typedef struct	s_filelst
 {
