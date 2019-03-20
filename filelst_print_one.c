@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   filelst_print.c                                    :+:    :+:            */
+/*   filelst_print_one.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/17 12:58:43 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/20 15:01:19 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/17 12:55:51 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/17 13:21:04 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	filelst_print(t_filelst *filelst, t_args args)
+void	filelst_print_one(t_filelst *filelst)
 {
-	if (args.one)
-		filelst_print_one(filelst);
-	else if (args.l)
-		filelst_print_l(filelst);
-	else
-		filelst_print_one(filelst);
+	if (filelst != NULL)
+	{
+		if (filelst->next != NULL)
+		{
+			ft_printf("%s\n", filelst->filename);
+			filelst_print_one(filelst->next);
+		}
+		else
+			ft_printf("%s\n", filelst->filename);
+	}
 }

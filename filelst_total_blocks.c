@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   filelst_print.c                                    :+:    :+:            */
+/*   filelst_total_blocks.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/17 12:58:43 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/20 15:01:19 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/17 13:13:56 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/17 13:22:00 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	filelst_print(t_filelst *filelst, t_args args)
+int		filelst_total_blocks(t_filelst *filelst)
 {
-	if (args.one)
-		filelst_print_one(filelst);
-	else if (args.l)
-		filelst_print_l(filelst);
-	else
-		filelst_print_one(filelst);
+	if (filelst != NULL)
+		return (filelst->stat->st_blocks + filelst_total_blocks(filelst->next));
+	return (0);
 }

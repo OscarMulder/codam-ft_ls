@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/15 13:45:40 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/17 12:40:44 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ t_args	init_args(void)
 	args.a = 0;
 	args.r = 0;
 	args.t = 0;
+	args.one = 0;
 	return (args);
 }

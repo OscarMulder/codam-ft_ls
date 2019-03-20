@@ -6,7 +6,7 @@
 #    By: omulder <omulder@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/01/09 11:10:43 by omulder        #+#    #+#                 #
-#    Updated: 2019/03/15 16:58:54 by omulder       ########   odam.nl          #
+#    Updated: 2019/03/18 14:33:49 by omulder       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ clean:
 	@make -C ft_printf clean
 	
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@make -C ft_printf fclean
 
 re: fclean all
 

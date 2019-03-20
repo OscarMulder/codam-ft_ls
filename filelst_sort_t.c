@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   filelst_sort.c                                     :+:    :+:            */
+/*   filelst_sort_t.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 17:00:02 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/20 11:23:57 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/20 11:06:03 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/20 11:22:00 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	filelst_sort(t_filelst **filelst)
+void	filelst_sort_t(t_filelst **filelst)
 {
 	t_filelst	*ptr;
 	t_filelst	*prev;
@@ -24,10 +24,18 @@ void	filelst_sort(t_filelst **filelst)
 	prev = *filelst;
 	while (ptr != NULL)
 	{
-		if (ft_strcmp(smallest->filename, ptr->filename) > 0)
+		if (ptr->stat->st_mtimespec.tv_sec > smallest->stat->st_mtimespec.tv_sec)
 		{
 			prevsmal = prev;
 			smallest = ptr;
+		}
+		else if (ptr->stat->st_mtimespec.tv_sec == smallest->stat->st_mtimespec.tv_sec)
+		{
+			if (ft_strcmp(smallest->filename, ptr->filename) > 0)
+			{
+				prevsmal = prev;
+				smallest = ptr;
+			}
 		}
 		prev = ptr;
 		ptr = ptr->next;
@@ -35,5 +43,5 @@ void	filelst_sort(t_filelst **filelst)
 	if (smallest != *filelst)
 		filelst_swap(filelst, smallest, prevsmal);
 	if ((*filelst)->next != NULL)
-		filelst_sort(&(*filelst)->next);
+		filelst_sort_t(&(*filelst)->next);
 }
