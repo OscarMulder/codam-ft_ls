@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/17 13:05:48 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/20 15:03:59 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 21:24:27 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,33 @@ char	*filelst_perm_str(mode_t st_mode)
 	return (perm);
 }
 
+void	print_time(t_filelst *ptr)
+{
+	time_t	cur;
+	time_t	past;
+	time_t	future;
+	time_t	file;
+	char	**timearr;
+
+	file = ptr->stat->st_mtimespec.tv_sec;
+	cur = time(NULL);
+	past = cur - SIXMONTHS;
+	future = cur + SIXMONTHS;
+	timearr = ft_strsplit(ctime(&file), ' ');
+	if (cur == -1 || (file > past && file < future))
+	{
+		ft_printf("%3.3s ", timearr[MONTH]);
+		ft_printf("%2.2s ", timearr[DAY]);
+		ft_printf("%5.5s ", timearr[TIME]);
+	}
+	else
+	{
+		ft_printf("%3.3s ", timearr[MONTH]);
+		ft_printf("%2.2s  ", timearr[DAY]);
+		ft_printf("%d ", ft_atoi(timearr[YEAR]));
+	}
+}
+
 void	filelst_maximums(t_filelst *ptr, t_max *max)
 {
 	int link;
@@ -107,7 +134,7 @@ void	filelst_print_l(t_filelst *filelst)
 {
 	t_filelst	*ptr;
 	t_max		*max;
-
+	ssize_t		ret;
 	max = (t_max*)malloc(sizeof(t_max));
 	max->link = 0;
 	max->username = 0;
@@ -115,25 +142,19 @@ void	filelst_print_l(t_filelst *filelst)
 	max->size = 0;
 	filelst_maximums(filelst, max);
 	ptr = filelst;
-	ft_printf("total %d\n", filelst_total_blocks(filelst));
 	while (ptr != NULL)
 	{
 		ft_printf("%-*s", 10, filelst_perm_str(ptr->stat->st_mode));
-		if (listxattr(ptr->path, NULL, 0, 0) != 0)
+		ret = listxattr(ptr->path, NULL, 0, 0);
+		if (ret != 0 && ret != -1 && !S_ISLNK(ptr->stat->st_mode))
 			ft_printf("@ ");
 		else
 			ft_printf("  ");
 		ft_printf("%*d ", max->link, ptr->stat->st_nlink);
 		ft_printf("%*s  %*s ", max->username, file_getusername(ptr->stat->st_uid), max->groupname, file_getgrname(ptr->stat->st_gid));
 		ft_printf("%*d ", max->size, ptr->stat->st_size);
-		ft_printf("%.3s ", &(ctime(&ptr->stat->st_mtimespec.tv_sec))[4]);
-		ft_printf("%.2s ", &(ctime(&ptr->stat->st_mtimespec.tv_sec))[8]);
-		ft_printf("%.5s ", &(ctime(&ptr->stat->st_mtimespec.tv_sec))[11]);
-		//ft_printf("%s %d %d:%d ", "Mar", 17, 13, 42);
-		if (S_ISLNK(ptr->stat->st_mode))
-			ft_printf("%s\n", ptr->linkname);
-		else
-			ft_printf("%s\n", ptr->filename);
+		print_time(ptr);
+		ft_printf("%s\n", ptr->linkname);
 		ptr = ptr->next;
 	}
 }

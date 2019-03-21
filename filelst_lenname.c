@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 17:02:38 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/15 17:02:41 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 15:34:59 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		filelst_lenname(t_filelst *filelst, int length)
 
 	if (filelst != NULL)
 	{
-		len = ft_strlen(filelst->entr->d_name);
+		len = ft_strlen(filelst->filename);
 		if (length > len)
 			len = length;
 		if (filelst->next != NULL)

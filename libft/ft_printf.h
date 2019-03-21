@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/05 07:43:01 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/13 16:32:39 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 20:39:10 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 typedef struct	s_fmt
 {
+	int		fd;
 	int		opt[6];
 	int		width;
 	int		prec;
@@ -32,16 +33,17 @@ typedef struct	s_fmt
 	char	conv;
 }				t_fmt;
 
-int		pf_isalpha(int c);
-int		pf_isdigit(int c);
-int			pf_atoi(const char *str);
-int		pf_putchar(int c);
-int			pf_putchar_uni(unsigned int c);
-size_t	pf_strlen(const char *s);
-void	pf_putstr(char const *s);
-void	pf_putnstr(char const *s, size_t len);
-int		pf_isspace(int c);
-size_t	pf_charsize(unsigned int c);
+int				ft_dprintf(int fd, const char *format, ...);
+int				pf_isalpha(int c);
+int				pf_isdigit(int c);
+int				pf_atoi(const char *str);
+int				pf_putchar(int fd, int c);
+int				pf_putchar_uni(int fd, unsigned int c);
+size_t			pf_strlen(const char *s);
+void			pf_putstr(int fd, char const *s);
+void			pf_putnstr(int fd, char const *s, size_t len);
+int				pf_isspace(int c);
+size_t			pf_charsize(unsigned int c);
 int				check_special(t_fmt fmt, double num);
 int				find_base(t_fmt fmt);
 int				find_case(t_fmt fmt);
@@ -77,7 +79,7 @@ int				print_dot(t_fmt copy);
 int				print_char(t_fmt fmt, unsigned int c);
 int				print_charp(t_fmt fmt, char *str);
 int				print_double(t_fmt fmt, double num);
-int				print_padding(char c, int size);
+int				print_padding(int fd, char c, int size);
 int				print_prehex(t_fmt fmt);
 int				print_signed(t_fmt fmt, long long num);
 int				print_unsigned(t_fmt fmt, unsigned long long num);
@@ -102,12 +104,12 @@ t_fmt			find_width(const char **format, t_fmt fmt, va_list ap);
 t_fmt			prepare_fmt_exp(t_fmt fmt, t_fmt copy, int ret);
 t_fmt			prepare_fmt_num(t_fmt fmt, t_fmt copy, int neg);
 t_fmt			reset_fmt(t_fmt fmt);
-void			pf_putcharsign(long long c);
-void			pf_putlong_base(long long n, int base, int up);
-void			pf_putlong(long long n);
-void			pf_putnwstr(wchar_t const *s, size_t len);
-void			pf_putulong_base(unsigned long long n, int base, int up);
-void			pf_putwstr(wchar_t const *s);
+void			pf_putcharsign(int fd, long long c);
+void			pf_putlong_base(int fd, long long n, int base, int up);
+void			pf_putlong(int fd, long long n);
+void			pf_putnwstr(int fd, wchar_t const *s, size_t len);
+void			pf_putulong_base(int fd, unsigned long long n, int base, int up);
+void			pf_putwstr(int fd, wchar_t const *s);
 void			put_backpadding(t_fmt fmt, long long num, int ilen);
 void			put_paddingandsign(t_fmt fmt, long long num, int ilen);
 void			put_upaddingandsign(t_fmt fmt, unsigned long long num, int ilen,

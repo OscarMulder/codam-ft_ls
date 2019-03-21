@@ -6,7 +6,7 @@
 #    By: omulder <omulder@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/03/13 19:44:49 by omulder        #+#    #+#                 #
-#    Updated: 2019/03/20 11:24:49 by omulder       ########   odam.nl          #
+#    Updated: 2019/03/21 10:17:34 by omulder       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LINK = -L./libft -lft
 FILES = ft_ls.c set_args.c init_args.c filelst_add.c filelst_lenname.c \
 filelst_print.c filelst_sort.c filelst_count.c filelst_print_one.c \
 filelst_print_noflag.c filelst_print_l.c filelst_total_blocks.c \
-filelst_sort_t.c filelst_sort_tr.c filelst_swap.c filelst_sort_r.c
+filelst_sort_t.c filelst_sort_tr.c filelst_swap.c filelst_sort_nr.c \
+filelst_sort_n.c filelst_dirs_print.c
 OBJECTS = $(FILES:.c=.o)
 
 all: $(OBJECTS) $(LIBFT) $(NAME)

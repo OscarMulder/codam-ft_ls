@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/12 16:06:31 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/13 16:21:15 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 20:41:58 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@ void	put_upaddingandsign(t_fmt fmt, unsigned long long num, int ilen, int op)
 	{
 		if (fmt.HASH && is_hex(fmt) && (num != 0 || fmt.conv == 'p'))
 		{
-			print_padding(' ', (fmt.width - ilen) - 2);
+			print_padding(fmt.fd, ' ', (fmt.width - ilen) - 2);
 			print_prehex(fmt);
 		}
 		else if (!(fmt.HASH && fmt.ZERO && op == -1))
-			print_padding(' ', (fmt.width - ilen));
+			print_padding(fmt.fd, ' ', (fmt.width - ilen));
 	}
 	if (num == 0 && fmt.prec == 0 && fmt.width != -1)
-		pf_putchar(' ');
+		pf_putchar(fmt.fd, ' ');
 	if (!fmt.MIN && fmt.ZERO && fmt.prec == -1)
 	{
 		if (fmt.HASH && is_hex(fmt) && (num != 0 || fmt.conv == 'p'))
 		{
 			print_prehex(fmt);
-			print_padding('0', (fmt.width - ilen) - 2);
+			print_padding(fmt.fd, '0', (fmt.width - ilen) - 2);
 		}
 		else
-			print_padding('0', (fmt.width - ilen));
+			print_padding(fmt.fd, '0', (fmt.width - ilen));
 	}
 	else if (!fmt.MIN && fmt.ZERO && fmt.HASH && fmt.conv == 'o' && op == -1)
-		print_padding('0', (fmt.width - ilen));
+		print_padding(fmt.fd, '0', (fmt.width - ilen));
 }

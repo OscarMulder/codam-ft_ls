@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/11 12:41:39 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/13 16:23:44 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 20:38:57 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int		print_prehex(t_fmt fmt)
 	{
 		if (c == 'X')
 		{
-			pf_putstr("0X");
+			pf_putstr(fmt.fd, "0X");
 			return (1);
 		}
 		else if (c == 'x' || c == 'p')
 		{
-			pf_putstr("0x");
+			pf_putstr(fmt.fd, "0x");
 			return (1);
 		}
 	}

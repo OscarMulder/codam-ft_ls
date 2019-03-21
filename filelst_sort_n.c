@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   filelst_sort_r.c                                   :+:    :+:            */
+/*   filelst_sort_n.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/20 11:24:08 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/20 11:24:26 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/15 17:00:02 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/21 10:02:33 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	filelst_sort_r(t_filelst **filelst)
+void	filelst_sort_n(t_filelst **filelst)
 {
 	t_filelst	*ptr;
 	t_filelst	*prev;
@@ -24,7 +24,7 @@ void	filelst_sort_r(t_filelst **filelst)
 	prev = *filelst;
 	while (ptr != NULL)
 	{
-		if (ft_strcmp(smallest->filename, ptr->filename) < 0)
+		if (ft_strcmp(smallest->filename, ptr->filename) > 0)
 		{
 			prevsmal = prev;
 			smallest = ptr;
@@ -35,5 +35,5 @@ void	filelst_sort_r(t_filelst **filelst)
 	if (smallest != *filelst)
 		filelst_swap(filelst, smallest, prevsmal);
 	if ((*filelst)->next != NULL)
-		filelst_sort_r(&(*filelst)->next);
+		filelst_sort_n(&(*filelst)->next);
 }

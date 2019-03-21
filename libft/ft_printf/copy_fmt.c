@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/26 13:01:25 by omulder        #+#    #+#                */
-/*   Updated: 2019/02/28 14:55:54 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 20:37:56 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_fmt	copy_fmt(t_fmt fmt)
 		copy.opt[i] = fmt.opt[i];
 		i++;
 	}
+	copy.fd = fmt.fd;
 	copy.width = fmt.width;
 	copy.prec = fmt.prec;
 	copy.length = fmt.length;

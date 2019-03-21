@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/21 12:54:56 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/13 16:23:19 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 20:40:42 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int					print_signed(t_fmt fmt, long long num)
 		ilen++;
 	put_paddingandsign(fmt, num, ilen);
 	if (fmt.prec != -1)
-		print_padding('0', (fmt.prec - pf_longlen(num)));
+		print_padding(fmt.fd, '0', (fmt.prec - pf_longlen(num)));
 	if (!(fmt.prec == 0 && num == 0))
-		pf_putlong(num);
+		pf_putlong(fmt.fd, num);
 	put_backpadding(fmt, num, ilen);
 	return (printed_chars(fmt, num));
 }

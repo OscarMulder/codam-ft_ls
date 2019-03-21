@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/17 12:58:43 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/20 15:01:19 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/21 15:20:22 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void	filelst_print(t_filelst *filelst, t_args args)
 	else if (args.l)
 		filelst_print_l(filelst);
 	else
-		filelst_print_one(filelst);
+		filelst_print_noflag(filelst);
 }
