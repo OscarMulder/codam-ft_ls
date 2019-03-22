@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/09 11:10:09 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/13 16:42:10 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/22 13:50:17 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_intlen(int n);
 int				ft_lstcount(t_list *lst);
 void			ft_lstaddback(t_list **alst, t_list *new);
+void			ft_strarrsort(char **arr);
+void			ft_strarrsort_r(char **arr);
 
 #endif

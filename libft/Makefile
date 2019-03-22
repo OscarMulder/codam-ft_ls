@@ -6,7 +6,7 @@
 #    By: omulder <omulder@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/01/09 11:10:43 by omulder        #+#    #+#                 #
-#    Updated: 2019/03/18 14:33:49 by omulder       ########   odam.nl          #
+#    Updated: 2019/03/22 13:51:20 by omulder       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ FILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c  \
 	ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c \
 	ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c \
 	ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_printline.c \
-	ft_putnstr.c ft_memchr.c ft_intlen.c ft_lstcount.c ft_lstaddback.c
+	ft_putnstr.c ft_memchr.c ft_intlen.c ft_lstcount.c ft_lstaddback.c \
+	ft_strarrsort.c ft_strarrsort_r.c
 OBJECTS = $(FILES:.c=.o)
 
 all: $(OBJECTS) $(NAME)

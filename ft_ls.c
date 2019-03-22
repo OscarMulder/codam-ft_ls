@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:39:43 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/21 21:14:41 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/22 13:51:03 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ int		is_dir(char *path)
 		return (0);
 	return (S_ISDIR(buf.st_mode));
 }
-
-/*
-** should add check to see if dir ends with '/'
-*/
 
 char	*make_path(char *dir, struct dirent *entr)
 {
@@ -135,7 +131,7 @@ int		ls_file(t_args args, char **files, size_t size)
 		}
 		else
 		{
-			ft_dprintf(2, "%s: %s: ", "./ft_ls", files[i]);
+			ft_dprintf(2, "%s: %s: ", "./ft_ls", files[i]); // change string1
 			perror("");
 			return (1);
 		}
@@ -241,6 +237,16 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
+	if (args.r)
+	{
+		ft_strarrsort_r(files);
+		ft_strarrsort_r(dir);
+	}
+	else
+	{
+		ft_strarrsort(files);
+		ft_strarrsort(dir);
+	}
 	if (j == 0 && k == 0)
 		ret = ls(args, dir[i]);
 	if (ret == 1)
