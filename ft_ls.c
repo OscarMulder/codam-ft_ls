@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:39:43 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/22 13:51:03 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/22 19:23:52 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int		is_dir(char *path)
 {
 	struct stat buf;
 
-	if (stat(path, &buf) == -1)
+	if (lstat(path, &buf) == -1)
+		return (0);
+	if (S_ISLNK(buf.st_mode))
 		return (0);
 	return (S_ISDIR(buf.st_mode));
 }
@@ -29,7 +31,7 @@ char	*make_path(char *dir, struct dirent *entr)
 	char *path;
 
 	temp = ft_strjoin(dir, "/");
-	path = ft_strjoin(temp, entr->d_name);
+	path = ft_strjoin(dir, entr->d_name);
 	ft_strdel(&temp);
 	return (path);
 }
@@ -52,7 +54,8 @@ char *dir)
 	dirp = opendir(dir);
 	if (dirp == NULL)
 	{
-		perror("./ft_ls");
+		ft_dprintf(2, "%s: %s: ", "ls", find_name(dir)); // change string1
+		perror("");
 		return (1);
 	}
 	entr = readdir(dirp);
@@ -79,7 +82,7 @@ int		ls(t_args args, char *dir)
 	dirs = NULL;
 	if (create_filelsts(&filelst, &dirs, args, dir) == ERROR)
 		return (ERROR);
-	if (args.l)
+	if ((dirs != NULL || filelst != NULL) && args.l)
 		ft_printf("total %d\n", filelst_total_blocks(filelst));
 	filelst_sort_print(&filelst, args);
 	if (dirs != NULL && dirs->next != NULL)
@@ -96,7 +99,8 @@ int		filelst_find_add(t_filelst **filelst, char *dir, char *filename)
 	dirp = opendir(dir);
 	if (dirp == NULL)
 	{
-		perror("./ft_ls");
+		ft_dprintf(2, "%s: %s: ", "ls", find_name(dir)); // change string1
+		perror("");
 		return (1);
 	}
 	entr = readdir(dirp);
@@ -131,7 +135,7 @@ int		ls_file(t_args args, char **files, size_t size)
 		}
 		else
 		{
-			ft_dprintf(2, "%s: %s: ", "./ft_ls", files[i]); // change string1
+			ft_dprintf(2, "%s: %s: ", "ls", files[i]); // change string1
 			perror("");
 			return (1);
 		}
@@ -168,9 +172,9 @@ char	*find_name(char *file)
 	while (file[size] != '\0')
 		size++;
 	i = size;
-	while (i > 0 && file[i] != '/')
+	while (i >= 0 && file[i] != '/')
 		i--;
-	if (i != 0)
+	if (i >= 0)
 		return (ft_strsub(file, (i + 1), (size - i)));
 	return (ft_strdup(file));
 }
@@ -182,10 +186,10 @@ char	*find_dir(char *file)
 	i = 0;
 	while (file[i] != '\0')
 		i++;
-	while (i > 0 && file[i] != '/')
+	while (i >= 0 && file[i] != '/')
 		i--;
-	if (i != 0)
-		return (ft_strsub(file, 0, i));
+	if (i >= 0)
+		return (ft_strsub(file, 0, i + 1));
 	return (ft_strdup("."));
 }
 

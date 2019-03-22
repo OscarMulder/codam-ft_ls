@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:40:26 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/21 20:02:21 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/22 17:42:16 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdlib.h>
-#define ERROR 1
-#define MONTH 1
-#define DAY 2
-#define TIME 3
-#define YEAR 4
-#define SIXMONTHS 15552000
+#define ERROR		1
+#define MONTH		1
+#define DAY			2
+#define TIME 		3
+#define YEAR 		4
+#define SIXMONTHS 	15552000
 
 typedef struct	s_args 
 {
@@ -52,6 +52,8 @@ typedef struct	s_max
 	int	username;
 	int	groupname;
 	int	size;
+	int	major;
+	int	minor;
 }				t_max;
 
 
@@ -62,6 +64,7 @@ typedef struct	s_filelst
 	char				*path;
 	char				*filename;
 	char				*linkname;
+	int					spec;
 	struct s_filelst	*next;
 }				t_filelst;
 

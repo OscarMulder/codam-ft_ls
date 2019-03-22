@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 13:44:53 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/21 21:04:08 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/22 16:41:42 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ t_args	set_args(t_args args, char *str, char **argv)
 	while (str[i] != '\0')
 	{
 		if (str[i] == 'l')
+		{
+			args.one = 0;
 			args.l = 1;
+		}
 		else if (str[i] == 'R')
 			args.R = 1;
 		else if (str[i] == 'a')
@@ -37,7 +40,10 @@ t_args	set_args(t_args args, char *str, char **argv)
 		else if (str[i] == 't')
 			args.t = 1;
 		else if (str[i] == '1')
+		{
 			args.one = 1;
+			args.l = 0;
+		}
 		else
 			exit_usage(argv, str[i]);
 		i++;

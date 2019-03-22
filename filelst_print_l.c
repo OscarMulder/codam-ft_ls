@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/17 13:05:48 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/21 21:24:27 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/22 19:37:27 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,32 @@ char	*filelst_perm_str(mode_t st_mode)
 		perm[1] = 'r';
 	if ((st_mode & S_IWUSR))
 		perm[2] = 'w';
-	if ((st_mode & S_IXUSR))
-		perm[3] = 'x'; // can be more
+	if ((st_mode & S_IXUSR) && (st_mode & S_ISUID))
+		perm[3] = 's';
+	else if ((st_mode & S_ISUID))
+		perm[3] = 'S';
+	else if ((st_mode & S_IXUSR))
+		perm[3] = 'x';
 	if ((st_mode & S_IRGRP))
 		perm[4] = 'r';
 	if ((st_mode & S_IWGRP))
 		perm[5] = 'w';
-	if ((st_mode & S_IXGRP))
-		perm[6] = 'x'; // can be more
+	if ((st_mode & S_IXGRP) && (st_mode & S_ISGID))
+		perm[6] = 's';
+	else if ((st_mode & S_ISGID))
+		perm[6] = 'S';
+	else if ((st_mode & S_IXGRP))
+		perm[6] = 'x';
 	if ((st_mode & S_IROTH))
 		perm[7] = 'r';
 	if ((st_mode & S_IWOTH))
 		perm[8] = 'w';
-	if ((st_mode & S_IXOTH))
-		perm[9] = 'x'; // can be more
+	if ((st_mode & S_ISVTX) && (st_mode & S_IXOTH))
+		perm[9] = 't';
+	else if ((st_mode & S_ISVTX))
+		perm[9] = 'T';
+	else if ((st_mode & S_IXOTH))
+		perm[9] = 'x';
 	return (perm);
 }
 
@@ -109,25 +121,36 @@ void	print_time(t_filelst *ptr)
 
 void	filelst_maximums(t_filelst *ptr, t_max *max)
 {
-	int link;
-	int username;
-	int groupname;
-	int	size;
+	t_max curr;
+
 
 	if (ptr->next != NULL)
 		filelst_maximums(ptr->next, max);
-	link = pf_longlen(ptr->stat->st_nlink);
-	username = ft_strlen(file_getusername(ptr->stat->st_uid));
-	groupname = ft_strlen(file_getgrname(ptr->stat->st_gid));
-	size = pf_longlen(ptr->stat->st_size) + 1;
-	if (link > max->link)
-		max->link = link;
-	if (username > max->username)
-		max->username = username;
-	if (groupname > max->groupname)
-		max->groupname = groupname;
-	if (size > max->size)
-		max->size = size;
+	curr.link = pf_longlen(ptr->stat->st_nlink);
+	curr.username = ft_strlen(file_getusername(ptr->stat->st_uid));
+	curr.groupname = ft_strlen(file_getgrname(ptr->stat->st_gid));
+	curr.major = pf_longlen(major(ptr->stat->st_rdev));
+	curr.minor = pf_longlen(minor(ptr->stat->st_rdev));
+	if (S_ISCHR(ptr->stat->st_mode) || S_ISBLK(ptr->stat->st_mode))
+		ptr->spec = 1;
+	if (ptr->spec)
+	{
+		if (curr.major > max->major)
+			max->major = curr.major;
+		if (curr.minor > max->minor)
+			max->minor = curr.minor;
+		curr.size = max->major + max->minor + 2;
+	}
+	else
+		curr.size = pf_longlen(ptr->stat->st_size) + 1;
+	if (curr.link > max->link)
+		max->link = curr.link;
+	if (curr.username > max->username)
+		max->username = curr.username;
+	if (curr.groupname > max->groupname)
+		max->groupname = curr.groupname;
+	if (curr.size > max->size)
+		max->size = curr.size;
 }
 
 void	filelst_print_l(t_filelst *filelst)
@@ -135,24 +158,32 @@ void	filelst_print_l(t_filelst *filelst)
 	t_filelst	*ptr;
 	t_max		*max;
 	ssize_t		ret;
+	char		*perm;
+
 	max = (t_max*)malloc(sizeof(t_max));
 	max->link = 0;
 	max->username = 0;
 	max->groupname = 0;
 	max->size = 0;
 	filelst_maximums(filelst, max);
+	if (max->size > (max->major + max->minor + 2))
+		max->major = (max->size - (max->major + max->minor + 2));
 	ptr = filelst;
 	while (ptr != NULL)
 	{
-		ft_printf("%-*s", 10, filelst_perm_str(ptr->stat->st_mode));
+		perm = filelst_perm_str(ptr->stat->st_mode);
+		ft_printf("%-*s", 10, perm);
 		ret = listxattr(ptr->path, NULL, 0, 0);
-		if (ret != 0 && ret != -1 && !S_ISLNK(ptr->stat->st_mode))
+		if (ret != 0 && ret != -1 && (!S_ISLNK(ptr->stat->st_mode)))
 			ft_printf("@ ");
 		else
 			ft_printf("  ");
 		ft_printf("%*d ", max->link, ptr->stat->st_nlink);
-		ft_printf("%*s  %*s ", max->username, file_getusername(ptr->stat->st_uid), max->groupname, file_getgrname(ptr->stat->st_gid));
-		ft_printf("%*d ", max->size, ptr->stat->st_size);
+		ft_printf("%-*s  %-*s ", max->username, file_getusername(ptr->stat->st_uid), max->groupname, file_getgrname(ptr->stat->st_gid));
+		if (ptr->spec)
+			ft_printf("%*u, %*u ", max->major, major(ptr->stat->st_rdev), max->minor, minor(ptr->stat->st_rdev));
+		else
+			ft_printf("%*u ", max->size, ptr->stat->st_size);
 		print_time(ptr);
 		ft_printf("%s\n", ptr->linkname);
 		ptr = ptr->next;
