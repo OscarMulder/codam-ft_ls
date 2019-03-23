@@ -6,22 +6,22 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:40:26 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/22 17:42:16 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/23 19:13:05 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
-#include "libft.h"
-#include <dirent.h>
-#include <sys/stat.h>
-#include <stdlib.h>
-#define ERROR		1
-#define MONTH		1
-#define DAY			2
-#define TIME 		3
-#define YEAR 		4
-#define SIXMONTHS 	15552000
+# include "libft.h"
+# include <dirent.h>
+# include <sys/stat.h>
+# include <stdlib.h>
+# define ERROR		1
+# define MONTH		1
+# define DAY		2
+# define TIME 		3
+# define YEAR 		4
+# define SIXMONTHS 	15778800
 
 typedef struct	s_args 
 {
@@ -59,7 +59,7 @@ typedef struct	s_max
 
 typedef struct	s_filelst
 {
-	struct dirent		*entr; // DO NOT TRUST IT CAN DISSAPEAR
+	struct dirent		*entr; // DO NOT TRUST IT WILL DISSAPEAR
 	struct stat			*stat;
 	char				*path;
 	char				*filename;
@@ -76,7 +76,7 @@ void	filelst_sort_n(t_filelst **filelst);
 void	filelst_sort_nr(t_filelst **filelst);
 void	filelst_sort(t_filelst **filelst, t_args args);
 void	filelst_sort_print(t_filelst **filelst, t_args args);
-void	filelst_dirs_print(t_filelst *dirs, t_args args);
+int		filelst_dirs_print(t_filelst *dirs, t_args args);
 void	filelst_print(t_filelst *filelst, t_args args);
 void	filelst_print_one(t_filelst *filelst);
 void	filelst_print_l(t_filelst *filelst);
@@ -95,5 +95,6 @@ int		not_inf(char *name);
 char	*find_dir(char *file);
 char	*find_name(char *file);
 char	*follow_link(t_filelst *new);
+int		is_dir(char *path, int l);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/17 13:05:48 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/22 19:37:27 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/23 20:27:17 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/xattr.h>
 #include <time.h>
 #include <sys/types.h>
+#include <sys/acl.h>
 #include <pwd.h>
 #include <uuid/uuid.h>
 #include <grp.h>
@@ -157,6 +158,7 @@ void	filelst_print_l(t_filelst *filelst)
 {
 	t_filelst	*ptr;
 	t_max		*max;
+	acl_t		acl;
 	ssize_t		ret;
 	char		*perm;
 
@@ -173,9 +175,13 @@ void	filelst_print_l(t_filelst *filelst)
 	{
 		perm = filelst_perm_str(ptr->stat->st_mode);
 		ft_printf("%-*s", 10, perm);
-		ret = listxattr(ptr->path, NULL, 0, 0);
-		if (ret != 0 && ret != -1 && (!S_ISLNK(ptr->stat->st_mode)))
+		ret = listxattr(ptr->path, NULL, 0, XATTR_NOFOLLOW);
+		acl = NULL;
+		acl = acl_get_link_np(ptr->path, ACL_TYPE_EXTENDED);
+		if (ret != 0 && ret != -1)
 			ft_printf("@ ");
+		else if (acl != NULL)
+			ft_printf("+ ");
 		else
 			ft_printf("  ");
 		ft_printf("%*d ", max->link, ptr->stat->st_nlink);

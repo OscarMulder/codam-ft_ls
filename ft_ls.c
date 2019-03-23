@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:39:43 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/23 16:37:56 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/23 20:38:21 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 #include "ft_ls.h"
 
-int		is_dir(char *path)
+int		is_dir(char *path, int l)
 {
 	struct stat buf;
 
-	if (lstat(path, &buf) == -1)
-		return (0);
-	if (S_ISLNK(buf.st_mode))
-		return (0);
+	if (l)
+	{
+		if (lstat(path, &buf) == -1)
+			return (0);
+	}
+	else
+	{
+		if (stat(path, &buf) == -1)
+			return (0);
+	}
 	return (S_ISDIR(buf.st_mode));
 }
 
@@ -54,7 +60,7 @@ char *dir)
 	dirp = opendir(dir);
 	if (dirp == NULL)
 	{
-		ft_dprintf(2, "%s: %s: ", "ls", find_name(dir)); // change string1
+		ft_dprintf(2, "%s: %s: ", "ft_ls", find_name(dir)); // change string1
 		perror("");
 		return (1);
 	}
@@ -64,7 +70,7 @@ char *dir)
 		if (args.a || entr->d_name[0] != '.')
 			filelst_add(filelst, entr, dir);
 		if (args.R && ((args.a && not_inf(entr->d_name)) ||
-		entr->d_name[0] != '.') && is_dir((*filelst)->path) &&
+		entr->d_name[0] != '.') && is_dir((*filelst)->path, 1) &&
 		!S_ISLNK((*filelst)->stat->st_mode))
 			filelst_add(dirs, entr, dir);
 		entr = readdir(dirp);
@@ -77,11 +83,11 @@ int		ls(t_args args, char *dir)
 {
 	t_filelst		*filelst;
 	t_filelst		*dirs;
-	int i;
+	int				ret;
 
+	ret = 0;
 	filelst = NULL;
 	dirs = NULL;
-	i = 0;
 	if (create_filelsts(&filelst, &dirs, args, dir) == ERROR)
 		return (ERROR);
 	if ((dirs != NULL || filelst != NULL) && args.l)
@@ -89,8 +95,9 @@ int		ls(t_args args, char *dir)
 	filelst_sort_print(&filelst, args);
 	if (dirs != NULL && dirs->next != NULL)
 		filelst_sort(&dirs, args);
-	filelst_dirs_print(dirs, args);
-	return (0);
+	if (filelst_dirs_print(dirs, args))
+		ret = 1;
+	return (ret);
 }
 
 int		filelst_find_add(t_filelst **filelst, char *dir, char *filename)
@@ -101,7 +108,7 @@ int		filelst_find_add(t_filelst **filelst, char *dir, char *filename)
 	dirp = opendir(dir);
 	if (dirp == NULL)
 	{
-		ft_dprintf(2, "%s: %s: ", "ls", find_name(dir)); // change string1
+		ft_dprintf(2, "%s: %s: ", "ft_ls", find_name(dir)); // change string1
 		perror("");
 		return (1);
 	}
@@ -121,14 +128,19 @@ int		filelst_find_add(t_filelst **filelst, char *dir, char *filename)
 int		ls_file(t_args args, char **files, size_t size)
 {
 	t_filelst		*filelst;
+	t_filelst		*prev;
 	size_t			i;
+	int				ret;
 
 	i = 0;
+	ret = 0;
 	filelst = NULL;
 	while (i < size)
 	{
-		filelst_find_add(&filelst, find_dir(files[i]), find_name(files[i]));
-		if (filelst != NULL)
+		prev = filelst;
+		if (filelst_find_add(&filelst, find_dir(files[i]), find_name(files[i])))
+			ret = 1;
+		if (filelst != prev)
 		{
 			filelst->filename = ft_strdup(files[i]);
 			filelst->linkname = filelst->filename;
@@ -137,14 +149,14 @@ int		ls_file(t_args args, char **files, size_t size)
 		}
 		else
 		{
-			ft_dprintf(2, "%s: %s: ", "ls", files[i]); // change string1
+			ft_dprintf(2, "%s: %s: ", "ft_ls", files[i]); // change string1
 			perror("");
-			return (1);
+			ret = 1;
 		}
 		i++;
 	}
 	filelst_sort_print(&filelst, args);
-	return (0);
+	return (ret);
 }
 
 void	file_find_print(t_filelst *filelst, t_args args, char *file)
@@ -188,12 +200,10 @@ char	*find_dir(char *file)
 	i = 0;
 	while (file[i] != '\0')
 		i++;
-	while (i > 0 && file[i] != '/')
+	while (i >= 0 && file[i] != '/')
 		i--;
-	if (i == 0 && file[i] == '/')
-		return (ft_strdup("/"));
-	if (i > 0)
-		ft_strsub(file, 0, i + 1);
+	if (i >= 0)
+		return (ft_strsub(file, 0, i + 1));
 	return (ft_strdup("."));
 }
 
@@ -208,7 +218,7 @@ int		main(int argc, char **argv)
 	int		ret;
 
 	i = 1;
-	dir = (char**)ft_memalloc(sizeof(char*) * argc);
+	dir = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
 	files = (char**)ft_memalloc(sizeof(char*) * argc);
 	args = init_args();
 	j = 0;
@@ -231,7 +241,12 @@ int		main(int argc, char **argv)
 	}
 	while (i < argc)
 	{
-		if (is_dir(argv[i]))
+		if (ft_strcmp(argv[i], "") == 0)
+		{
+			ft_dprintf(2, "%s: %s: No such file or directory\n", argv[0], "fts_open");
+			return (1);
+		}
+		if (is_dir(argv[i], args.l))
 		{
 			ft_strdel(&dir[j]);
 			dir[j] = ft_strdup(argv[i]);
@@ -245,36 +260,31 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	i = 0;
-	if (args.r)
-	{
-		ft_strarrsort_r(files);
+	if (args.r && j > 1)
 		ft_strarrsort_r(dir);
-	}
-	else
-	{
-		ft_strarrsort(files);
+	else if (j > 1)
 		ft_strarrsort(dir);
-	}
+	if (k > 1)
+		ft_strarrsort(files);
 	if (j == 0 && k == 0)
-		ret = ls(args, dir[i]);
+		ret = ls(args, ".");
 	if (ret == 1)
 		return (ret);
 	if (k > 0)
-		ret = ls_file(args, files, (size_t)k);
-	if (ret == 1)
-		return (ret);
-	if (k > 0 && j > 0)
+		ret += ls_file(args, files, (size_t)k);
+	if (k > 0 && j > 0 && ret != k)
 		ft_printf("\n");
 	while (i < j)
 	{
-		if (j > 1)
+		if (j > 1 || (j + k) > 1)
 			ft_printf("%s:\n", dir[i]);
-		ret = ls(args, dir[i]);
-		if (ret == 1)
-			return (ret);
+		if (ls(args, dir[i]))
+			ret = 1;
 		i++;
 		if (i < j)
 			ft_printf("\n");
 	}
-	return (0);
+	if (ret > 1)
+		return (1);
+	return (ret);
 }

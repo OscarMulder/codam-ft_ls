@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 13:44:53 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/22 16:41:42 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/23 19:26:02 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int		exit_usage(char **argv, char c)
 {
 	ft_dprintf(2, "%s: illegal option -- %c\n", argv[0], c);
-	ft_dprintf(2, "usage: %s [-alrtR1] [file ...]\n", argv[0]);
+	ft_dprintf(2, "usage: ft_ls [-alrtR1] [file ...]\n");
 	exit(ERROR);
 }
 
