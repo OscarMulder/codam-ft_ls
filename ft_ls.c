@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:39:43 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/22 19:23:52 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/23 16:37:56 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*make_path(char *dir, struct dirent *entr)
 	char *path;
 
 	temp = ft_strjoin(dir, "/");
-	path = ft_strjoin(dir, entr->d_name);
+	path = ft_strjoin(temp, entr->d_name);
 	ft_strdel(&temp);
 	return (path);
 }
@@ -77,9 +77,11 @@ int		ls(t_args args, char *dir)
 {
 	t_filelst		*filelst;
 	t_filelst		*dirs;
+	int i;
 
 	filelst = NULL;
 	dirs = NULL;
+	i = 0;
 	if (create_filelsts(&filelst, &dirs, args, dir) == ERROR)
 		return (ERROR);
 	if ((dirs != NULL || filelst != NULL) && args.l)
@@ -186,10 +188,12 @@ char	*find_dir(char *file)
 	i = 0;
 	while (file[i] != '\0')
 		i++;
-	while (i >= 0 && file[i] != '/')
+	while (i > 0 && file[i] != '/')
 		i--;
-	if (i >= 0)
-		return (ft_strsub(file, 0, i + 1));
+	if (i == 0 && file[i] == '/')
+		return (ft_strdup("/"));
+	if (i > 0)
+		ft_strsub(file, 0, i + 1);
 	return (ft_strdup("."));
 }
 
