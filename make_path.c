@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_args.c                                        :+:    :+:            */
+/*   make_path.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/24 14:09:48 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/24 14:09:52 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_args	init_args(void)
+char	*make_path(char *dir, struct dirent *entr)
 {
-	t_args args;
+	char *temp;
+	char *path;
 
-	args.l = 0;
-	args.rec = 0;
-	args.a = 0;
-	args.rec = 0;
-	args.t = 0;
-	args.one = 0;
-	return (args);
+	temp = ft_strjoin(dir, "/");
+	path = ft_strjoin(temp, entr->d_name);
+	ft_strdel(&temp);
+	return (path);
 }

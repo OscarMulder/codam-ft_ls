@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/21 10:03:38 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/21 10:07:28 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	filelst_sort(t_filelst **filelst, t_args args)
 {
 	if (*filelst != NULL)
 	{
-		if (args.r)
+		if (args.rec)
 		{
 			if (args.t)
 				filelst_sort_tr(filelst);
@@ -37,7 +37,7 @@ void	filelst_sort_print(t_filelst **filelst, t_args args)
 {
 	if (*filelst != NULL)
 	{
-		if (args.r)
+		if (args.rec)
 		{
 			if (args.t)
 				filelst_sort_tr(filelst);

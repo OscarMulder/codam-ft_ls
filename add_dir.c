@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_args.c                                        :+:    :+:            */
+/*   add_dir.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/24 15:06:26 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/24 15:25:29 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_args	init_args(void)
+int		add_dir(char **dir, char *str, int j)
 {
-	t_args args;
-
-	args.l = 0;
-	args.rec = 0;
-	args.a = 0;
-	args.rec = 0;
-	args.t = 0;
-	args.one = 0;
-	return (args);
+	dir[j] = ft_strdup(str);
+	j++;
+	return (j);
 }

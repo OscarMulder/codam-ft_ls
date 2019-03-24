@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_args.c                                        :+:    :+:            */
+/*   sort_arrs.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
+/*   Created: 2019/03/24 15:09:49 by omulder        #+#    #+#                */
 /*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_args	init_args(void)
+void	sort_arrs(t_args args, int *ix, char **dir, char **files)
 {
-	t_args args;
-
-	args.l = 0;
-	args.rec = 0;
-	args.a = 0;
-	args.rec = 0;
-	args.t = 0;
-	args.one = 0;
-	return (args);
+	if (args.rec && ix[DIRI] > 1)
+		ft_strarrsort_r(dir);
+	else if (ix[DIRI] > 1)
+		ft_strarrsort(dir);
+	if (ix[FILES] > 1)
+		ft_strarrsort(files);
 }

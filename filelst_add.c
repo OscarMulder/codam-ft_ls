@@ -6,20 +6,33 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 17:02:16 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/22 16:53:33 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/24 12:58:54 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+char	*ft_strjoin3(char *str1, char *str2, char *str3)
+{
+	char	*temp;
+	char	*new;
+
+	temp = ft_strjoin(str1, str2);
+	new = ft_strjoin(temp, str3);
+	ft_strdel(&temp);
+	return (new);
+}
+
 char	*follow_link(t_filelst *new)
 {
 	char		*buf;
+	char		*str;
 
 	buf = ft_strnew(255);
 	readlink(new->path, buf, 255);
-	//ft_printf("%s -> %s\n", new->path, buf);
-	return (ft_strjoin(ft_strjoin(new->filename, " -> "), buf)); //LEAK
+	str = ft_strjoin3(new->filename, " -> ", buf);
+	ft_strdel(&buf);
+	return (str);
 }
 
 int		filelst_add(t_filelst **filelst, struct dirent *entr, char *dir)
@@ -29,7 +42,6 @@ int		filelst_add(t_filelst **filelst, struct dirent *entr, char *dir)
 	new = (t_filelst*)ft_memalloc(sizeof(t_filelst));
 	new->spec = 0;
 	new->path = make_path(dir, entr);
-	new->entr = entr;
 	new->stat = (struct stat*)ft_memalloc(sizeof(struct stat));
 	if (lstat(new->path, new->stat) == -1)
 		return (ERROR);

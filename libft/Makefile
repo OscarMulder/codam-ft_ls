@@ -6,7 +6,7 @@
 #    By: omulder <omulder@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/01/09 11:10:43 by omulder        #+#    #+#                 #
-#    Updated: 2019/03/22 13:51:20 by omulder       ########   odam.nl          #
+#    Updated: 2019/03/24 13:22:35 by omulder       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ FILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c  \
 	ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c ft_strstr.c \
 	ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_printline.c \
 	ft_putnstr.c ft_memchr.c ft_intlen.c ft_lstcount.c ft_lstaddback.c \
-	ft_strarrsort.c ft_strarrsort_r.c
+	ft_strarrsort.c ft_strarrsort_r.c ft_strarrdel.c
 OBJECTS = $(FILES:.c=.o)
 
 all: $(OBJECTS) $(NAME)
@@ -41,12 +41,12 @@ $(OBJECTS): $(FILES)
 	$(CC) $(FLAGS) $(INCLUDES) -c $^
 
 clean:
-	@rm -f $(OBJECTS)
-	@make -C ft_printf clean
+	rm -f $(OBJECTS)
+	make -C ft_printf clean
 	
 fclean: clean
-	@rm -f $(NAME)
-	@make -C ft_printf fclean
+	rm -f $(NAME)
+	make -C ft_printf fclean
 
 re: fclean all
 

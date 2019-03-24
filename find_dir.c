@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_args.c                                        :+:    :+:            */
+/*   find_dir.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/24 14:20:01 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/24 14:20:03 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_args	init_args(void)
+char	*find_dir(char *file)
 {
-	t_args args;
+	int	i;
 
-	args.l = 0;
-	args.rec = 0;
-	args.a = 0;
-	args.rec = 0;
-	args.t = 0;
-	args.one = 0;
-	return (args);
+	i = 0;
+	while (file[i] != '\0')
+		i++;
+	while (i >= 0 && file[i] != '/')
+		i--;
+	if (i >= 0)
+		return (ft_strsub(file, 0, i + 1));
+	return (ft_strdup("."));
 }

@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 17:02:53 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/21 15:43:46 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/24 13:41:48 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int			get_row(int n, int width, int length)
 	int row;
 
 	if (n == 0 || width == 0 || length == 0)
+		return (1);
+	if (width / length == 0)
 		return (1);
 	row = (n / (width / length));
 	if ((n % (width / length)) != 0)

@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_args.c                                        :+:    :+:            */
+/*   no_arguments_ls.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/24 15:11:06 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/24 15:11:08 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_args	init_args(void)
+void	no_arguments_ls(t_args args, int *ix)
 {
-	t_args args;
-
-	args.l = 0;
-	args.rec = 0;
-	args.a = 0;
-	args.rec = 0;
-	args.t = 0;
-	args.one = 0;
-	return (args);
+	if (ix[DIRI] == 0 && ix[FILES] == 0)
+		ix[RET] = ls(args, ".");
 }

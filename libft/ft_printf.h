@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/02/05 07:43:01 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/21 20:39:10 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/24 15:56:15 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void			pf_putcharsign(int fd, long long c);
 void			pf_putlong_base(int fd, long long n, int base, int up);
 void			pf_putlong(int fd, long long n);
 void			pf_putnwstr(int fd, wchar_t const *s, size_t len);
-void			pf_putulong_base(int fd, unsigned long long n, int base, int up);
+void			pf_putulong_base(int fd, unsigned long long n, int base,
+int up);
 void			pf_putwstr(int fd, wchar_t const *s);
 void			put_backpadding(t_fmt fmt, long long num, int ilen);
 void			put_paddingandsign(t_fmt fmt, long long num, int ilen);

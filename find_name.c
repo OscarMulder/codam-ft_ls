@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_args.c                                        :+:    :+:            */
+/*   find_name.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/24 14:19:41 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/24 14:19:45 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_args	init_args(void)
+char	*find_name(char *file)
 {
-	t_args args;
+	int	i;
+	int	size;
 
-	args.l = 0;
-	args.rec = 0;
-	args.a = 0;
-	args.rec = 0;
-	args.t = 0;
-	args.one = 0;
-	return (args);
+	i = 0;
+	size = 0;
+	while (file[size] != '\0')
+		size++;
+	i = size;
+	while (i >= 0 && file[i] != '/')
+		i--;
+	if (i >= 0)
+		return (ft_strsub(file, (i + 1), (size - i)));
+	return (ft_strdup(file));
 }

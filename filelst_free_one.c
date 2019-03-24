@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_args.c                                        :+:    :+:            */
+/*   filelst_free_one.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/15 13:45:27 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
+/*   Created: 2019/03/24 12:41:58 by omulder        #+#    #+#                */
+/*   Updated: 2019/03/24 13:16:07 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_args	init_args(void)
+void	filelst_free_one(t_filelst **filelst)
 {
-	t_args args;
-
-	args.l = 0;
-	args.rec = 0;
-	args.a = 0;
-	args.rec = 0;
-	args.t = 0;
-	args.one = 0;
-	return (args);
+	if (filelst != NULL && (*filelst) != NULL)
+	{
+		ft_strdel(&(*filelst)->path);
+		free((*filelst)->stat);
+		(*filelst)->stat = NULL;
+		if ((*filelst)->linkname != (*filelst)->filename)
+			ft_strdel(&(*filelst)->linkname);
+		ft_strdel(&(*filelst)->filename);
+		(*filelst)->next = NULL;
+		free((*filelst));
+		(*filelst) = NULL;
+	}
 }

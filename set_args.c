@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/15 13:44:53 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/23 19:26:02 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@ static int		exit_usage(char **argv, char c)
 	exit(ERROR);
 }
 
-t_args	set_args(t_args args, char *str, char **argv)
+static t_args	set_display(t_args args, int l, int one)
+{
+	args.one = one;
+	args.l = l;
+	return (args);
+}
+
+t_args			set_args(t_args args, char *str, char **argv)
 {
 	int i;
 
@@ -27,23 +34,17 @@ t_args	set_args(t_args args, char *str, char **argv)
 	while (str[i] != '\0')
 	{
 		if (str[i] == 'l')
-		{
-			args.one = 0;
-			args.l = 1;
-		}
+			args = set_display(args, 1, 0);
 		else if (str[i] == 'R')
-			args.R = 1;
+			args.rec = 1;
 		else if (str[i] == 'a')
 			args.a = 1;
 		else if (str[i] == 'r')
-			args.r = 1;
+			args.rec = 1;
 		else if (str[i] == 't')
 			args.t = 1;
 		else if (str[i] == '1')
-		{
-			args.one = 1;
-			args.l = 0;
-		}
+			args = set_display(args, 0, 1);
 		else
 			exit_usage(argv, str[i]);
 		i++;
