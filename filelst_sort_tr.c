@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/20 11:23:05 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:29:10 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/24 17:15:27 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			filelst_sort_tr(t_filelst **filelst)
 		else if (ptr->stat->st_mtimespec.tv_sec ==
 		sptr->stat->st_mtimespec.tv_sec)
 		{
-			if (ft_strcmp(sptr->filename, ptr->filename) > 0)
+			if (ft_strcmp(sptr->filename, ptr->filename) < 0)
 				set_vars(ptr, prev, &sptr, &prevsmal);
 		}
 		prev = ptr;
@@ -45,5 +45,5 @@ void			filelst_sort_tr(t_filelst **filelst)
 	if (sptr != *filelst)
 		filelst_swap(filelst, sptr, prevsmal);
 	if ((*filelst)->next != NULL)
-		filelst_sort_t(&(*filelst)->next);
+		filelst_sort_tr(&(*filelst)->next);
 }
