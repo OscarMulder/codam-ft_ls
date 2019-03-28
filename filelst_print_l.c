@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/17 13:05:48 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:43:23 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/26 17:30:18 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	init_max(t_filelst *filelst, t_max *max)
 	max->username = 0;
 	max->groupname = 0;
 	max->size = 0;
+	max->major = 0;
+	max->minor = 0;
 	filelst_maximums(filelst, max);
 	if (max->size > (max->major + max->minor + 2))
 		max->major = (max->size - (max->major + max->minor + 2));
@@ -40,6 +42,28 @@ static void	print_perms(t_filelst *ptr)
 		ft_printf("+ ");
 	else
 		ft_printf("  ");
+	ft_strdel(&perm);
+	free(acl);
+}
+
+static void	print_user_group(t_filelst *ptr, t_max *max)
+{
+	char		*usern;
+	char		*groupname;
+	int			isstr;
+
+	isstr = 0;
+	usern = file_getusername(ptr->stat->st_uid);
+	if (usern == NULL)
+		ft_printf("%-*d  ", max->username, ptr->stat->st_uid);
+	else
+		ft_printf("%-*s  ", max->username, usern);
+	isstr = 0;
+	groupname = file_getgrname(ptr->stat->st_gid);
+	if (groupname == NULL)
+		ft_printf("%-*d ", max->groupname, ptr->stat->st_gid);
+	else
+		ft_printf("%-*s ", max->groupname, groupname);
 }
 
 void		filelst_print_l(t_filelst *filelst)
@@ -54,12 +78,10 @@ void		filelst_print_l(t_filelst *filelst)
 	{
 		print_perms(ptr);
 		ft_printf("%*d ", max->link, ptr->stat->st_nlink);
-		ft_printf("%-*s  %-*s ", max->username,
-		file_getusername(ptr->stat->st_uid), max->groupname,
-		file_getgrname(ptr->stat->st_gid));
+		print_user_group(ptr, max);
 		if (ptr->spec)
-			ft_printf("%*u, %*u ", max->major, major(ptr->stat->st_rdev),
-			max->minor, minor(ptr->stat->st_rdev));
+			ft_printf("%*u,%*u ", 4, major(ptr->stat->st_rdev),
+			4, minor(ptr->stat->st_rdev));
 		else
 			ft_printf("%*u ", max->size, ptr->stat->st_size);
 		print_time(ptr);

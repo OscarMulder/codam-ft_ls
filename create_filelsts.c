@@ -6,11 +6,22 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/24 14:10:56 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:51:17 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/25 16:30:45 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+static int		error_nodir(char *dir)
+{
+	char			*name;
+
+	name = find_name(dir);
+	ft_dprintf(2, "%s: %s: ", "ft_ls", name);
+	ft_strdel(&name);
+	perror("");
+	return (1);
+}
 
 int		create_filelsts(t_filelst **filelst, t_filelst **dirs, t_args args,
 char *dir)
@@ -20,11 +31,7 @@ char *dir)
 
 	dirp = opendir(dir);
 	if (dirp == NULL)
-	{
-		ft_dprintf(2, "%s: %s: ", "ft_ls", find_name(dir));
-		perror("");
-		return (1);
-	}
+		return (error_nodir(dir));
 	entr = readdir(dirp);
 	while (entr != NULL)
 	{

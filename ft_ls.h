@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/13 19:40:26 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/24 15:54:47 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/26 17:23:43 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define DAY		2
 # define TIME 		3
 # define YEAR 		4
-# define SIXMONTHS 	15778800
+# define SIXMONTHS 	15724800
 # define LOOP		0
 # define DIRI		1
 # define FILES		2
