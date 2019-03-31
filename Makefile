@@ -6,7 +6,7 @@
 #    By: omulder <omulder@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/03/13 19:44:49 by omulder        #+#    #+#                 #
-#    Updated: 2019/03/24 15:40:51 by omulder       ########   odam.nl          #
+#    Updated: 2019/03/28 11:46:54 by omulder       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME = ft_ls
 LIBFT= ./libft/libft.a
 CC = gcc
 FLAGS = -Wall -Werror -Wextra
-INCLUDES = -I./ -I./libft/
+INCLUDES = -I./ -I./libft/ -I./includes
 LINK = -L./libft -lft
+VPATH = ./srcs
 FILES = ft_ls.c set_args.c init_args.c filelst_add.c filelst_lenname.c \
 filelst_print.c filelst_sort.c filelst_count.c filelst_print_one.c \
 filelst_print_noflag.c filelst_print_l.c filelst_total_blocks.c \
