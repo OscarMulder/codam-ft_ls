@@ -6,7 +6,7 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/24 15:35:42 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/26 17:29:43 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/31 17:04:50 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	set_major_minor(t_filelst *ptr, t_max curr, t_max *max)
 		max->size = curr.size;
 }
 
-void			filelst_maximums(t_filelst *ptr, t_max *max)
+void		filelst_maximums(t_filelst *ptr, t_max *max)
 {
 	t_max	curr;
 	char	*un;

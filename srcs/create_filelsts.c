@@ -6,13 +6,13 @@
 /*   By: omulder <omulder@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/24 14:10:56 by omulder        #+#    #+#                */
-/*   Updated: 2019/03/25 16:30:45 by omulder       ########   odam.nl         */
+/*   Updated: 2019/03/31 17:04:23 by omulder       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static int		error_nodir(char *dir)
+static int	error_nodir(char *dir)
 {
 	char			*name;
 
@@ -23,7 +23,7 @@ static int		error_nodir(char *dir)
 	return (1);
 }
 
-int		create_filelsts(t_filelst **filelst, t_filelst **dirs, t_args args,
+int			create_filelsts(t_filelst **filelst, t_filelst **dirs, t_args args,
 char *dir)
 {
 	DIR				*dirp;
